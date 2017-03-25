@@ -54,7 +54,7 @@
 
         <TextBlock Grid.Row="1" Text="The Geek couldn't find any games. Please make sure you have an internet connection and have entered your BGG username correctly."
                    Visibility="{Binding baseCollection.Count, Converter={StaticResource gamesListVisibilityConverter}}"
-                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center"/>
+                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         <GridView ItemsSource="{Binding filteredbaseCollection}" Padding="16" Grid.Row="1"
 			Header="{Binding ItemsSource.Count, Converter={StaticResource gamesCountConverter}, ElementName=GamesList}">
@@ -107,8 +107,11 @@
                                        LengthMax="{Binding maximumLength, Mode=TwoWay}" LengthMin="{Binding minimumLength, Mode=TwoWay}"/>
         </Grid>
 
+        <Grid Grid.Row="1" Background="White" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}"/>
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Background="Gray" Opacity="0.75"/>
-        <ProgressRing Grid.Row="1" IsActive="{Binding isWorking}" Height="48" Width="48"/>
-        <TextBlock Grid.Row="1" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Text="The Geek is getting your games from BGG" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Style="{StaticResource SubHeaderStyle}" FontWeight="Bold"/>
+        <ProgressRing Grid.Row="1" IsActive="{Binding isWorking}" Height="48" Width="48" Foreground="{StaticResource PrimaryColourBrush}"/>
+        <TextBlock Grid.Row="1" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Text="The Geek is getting your games from BGG"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Style="{StaticResource SubHeaderStyle}"
+                   TextWrapping="Wrap" TextAlignment="Center"/>
     </Grid>
 </Page>
