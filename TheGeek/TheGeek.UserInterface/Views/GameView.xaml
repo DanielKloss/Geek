@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="TheGeek.UserInterface.Views.GameView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:TheGeek.UserInterface.Controls"
+    mc:Ignorable="d">
+
+    <RelativePanel>
+        <Border x:Name="titleBar" Background="{StaticResource PrimaryColourBrush}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Height="60">
+            <TextBlock Text="{Binding game.name}" Style="{StaticResource PageHeaderStyle}" />
+        </Border>
+        <StackPanel x:Name="GameInfo" Orientation="Horizontal" Grid.Row="1" Margin="16" RelativePanel.Below="titleBar" Height="260" RelativePanel.AlignHorizontalCenterWithPanel="True">
+            <Image Source="{Binding game.image}"/>
+            <Grid Margin="16,0,0,0" Width="340">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Padding="4,0,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                            <GradientStop Color="#FF8E96C2" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20" VerticalAlignment="Center"/>
+                        <TextBlock Text="Description" Style="{StaticResource TextStyle}" VerticalAlignment="Center" FontSize="20"/>
+                    </StackPanel>
+                </Border>
+                <ScrollViewer Grid.Row="1" Margin="0,4,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}"/>
+                </ScrollViewer>
+            </Grid>
+            <Grid Margin="16,0,0,0">
+                <controls:InfoBox TitleText="Year Published" Value="{Binding game.yearPublished}" Icon="" VerticalAlignment="Top"/>
+                <controls:InfoBox TitleText="Complexity" Value="{Binding game.weight}" Icon="" VerticalAlignment="Bottom"/>
+            </Grid>
+            <Grid Margin="20,0,0,0">
+                <controls:InfoBox TitleText="Average Rating" Value="{Binding game.average}" Icon="" VerticalAlignment="Top"/>
+                <controls:InfoBox TitleText="Your Rating" Value="{Binding game.rating}" Icon="" VerticalAlignment="Bottom"/>
+            </Grid>
+            <Grid Margin="20,0,0,0">
+                <controls:InfoBox TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon="" VerticalAlignment="Top"/>
+                <controls:InfoBox TitleText="Length" Value="{Binding game.displayPlayTime}" Icon="" VerticalAlignment="Bottom"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel RelativePanel.Below="GameInfo" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="16,0,16,16">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
+                <TextBlock Text="Desingers: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
+                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" Style="{StaticResource TextStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
+                <TextBlock Text="Artists: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
+                <TextBlock Text="{Binding game.artists, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
+                <TextBlock Text="Expansions: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
+                <TextBlock Text="{Binding game.expansions, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
+                <TextBlock Text="Mechanics: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
+                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
+                <TextBlock Text="Categories: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
+                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
+            </StackPanel>
+        </StackPanel>
+    </RelativePanel>
+</Page>

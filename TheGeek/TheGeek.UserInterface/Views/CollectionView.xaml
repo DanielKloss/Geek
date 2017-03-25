@@ -1,0 +1,114 @@
+﻿<Page
+    x:Name="root"
+    x:Class="TheGeek.UserInterface.Views.CollectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:TheGeek.UserInterface.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MasterColumn.Width" Value="*" />
+                        <Setter Target="DetailColumn.Width" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="MasterColumn" Width="*"/>
+            <ColumnDefinition x:Name="DetailColumn" Width="328"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource PrimaryColourBrush}" Height="60" BorderThickness="0,0,0,5" BorderBrush="{StaticResource PrimaryDarkerColourBrush}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Your Collection" Style="{StaticResource PageHeaderStyle}" />
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="{StaticResource PrimaryColourBrush}" Height="60" Padding="8,8,8,8" BorderThickness="0,0,0,5" BorderBrush="{StaticResource PrimaryDarkerColourBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="&#xE8B1;" Command="{Binding chooseRandomGameCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
+                <TextBox Text="{Binding username, Mode=TwoWay}" PlaceholderText="BGG Username" IsEnabled="{Binding IsWorking, ElementName=control}"
+					     Width="152" Style="{StaticResource TextBoxStyle}" BorderThickness="3,3,0,3"/>
+                <Button Content="&#xEA47;" Command="{Binding getBaseCollectionCommand}" Style="{StaticResource IconButtonStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Grid.Row="1" Text="The Geek couldn't find any games. Please make sure you have an internet connection and have entered your BGG username correctly."
+                   Visibility="{Binding baseCollection.Count, Converter={StaticResource gamesListVisibilityConverter}}"
+                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center"/>
+
+        <GridView ItemsSource="{Binding filteredbaseCollection}" Padding="16" Grid.Row="1"
+			Header="{Binding ItemsSource.Count, Converter={StaticResource gamesCountConverter}, ElementName=GamesList}">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemContainerStyle>
+                <StaticResource ResourceKey="NoBorderGridViewStyle"/>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding DataContext.showGameDetailCommand, ElementName=root}" CommandParameter="{Binding}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <ContentPresenter Height="150" Width="150"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Source="{Binding image}" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                            <TextBlock Grid.Row="1" Text="{Binding name}" TextAlignment="Center" HorizontalAlignment="Center"
+								TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <Grid Padding="8,8,8,8" Grid.Column="1" Grid.Row="1" Background="{StaticResource PrimaryColourBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:BoardGameSearchBox Grid.Row="0"
+                                         FilterText="{Binding filterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         SearchCategories="{Binding searchCategories}" IsWorking="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}"
+                                         SelectedSearchCategory="{Binding searchType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <controls:FilterControlBox Grid.Row="1" Margin="0,32,0,0" Height="auto"
+                                       IsFiltered="{Binding isFiltered, Mode=TwoWay}" NumberOfPlayers="{Binding numberOfPlayers, Mode=TwoWay}" IsWorking="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}"
+                                       AvRatingMax="{Binding maximumAverageRating, Mode=TwoWay}" AvRatingMin="{Binding minimumAverageRating, Mode=TwoWay}"
+                                       RatingMax="{Binding maximumRating, Mode=TwoWay}" RatingMin="{Binding minimumRating, Mode=TwoWay}"
+                                       ComplexityMax="{Binding maximumComplexity, Mode=TwoWay}" ComplexityMin="{Binding minimumComplexity, Mode=TwoWay}"
+                                       LengthMax="{Binding maximumLength, Mode=TwoWay}" LengthMin="{Binding minimumLength, Mode=TwoWay}"/>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Background="Gray" Opacity="0.75"/>
+        <ProgressRing Grid.Row="1" IsActive="{Binding isWorking}" Height="48" Width="48"/>
+        <TextBlock Grid.Row="1" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Text="The Geek is getting your games from BGG" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Style="{StaticResource SubHeaderStyle}" FontWeight="Bold"/>
+    </Grid>
+</Page>
