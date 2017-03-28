@@ -9,11 +9,12 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Border Style="{StaticResource InfoBorderStyle}" VerticalAlignment="Bottom" Width="120" Height="120">
+    <Border Style="{StaticResource InfoBorderStyle}" Width="120" Height="120">
         <Grid>
             <TextBlock Text="{Binding Icon, ElementName=control}" Style="{StaticResource IconBackgroundStyle}"/>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding TitleText, ElementName=control}" Style="{StaticResource TextStyle}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontSize="16"/>
+                <TextBlock Text="{Binding TitleText, ElementName=control}" Style="{StaticResource TextStyle}"
+                           HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontSize="16"/>
                 <TextBlock Text="{Binding Value, ElementName=control}" Style="{StaticResource SubHeaderStyle}"/>
             </StackPanel>
         </Grid>

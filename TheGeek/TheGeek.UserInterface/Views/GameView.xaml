@@ -7,72 +7,48 @@
     xmlns:controls="using:TheGeek.UserInterface.Controls"
     mc:Ignorable="d">
 
-    <RelativePanel>
-        <Border x:Name="titleBar" Background="{StaticResource PrimaryColourBrush}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Height="60">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Background="{StaticResource PrimaryColourBrush}" Height="60">
             <TextBlock Text="{Binding game.name}" Style="{StaticResource PageHeaderStyle}" />
         </Border>
-        <StackPanel x:Name="GameInfo" Orientation="Horizontal" Grid.Row="1" Margin="16" RelativePanel.Below="titleBar" Height="260" RelativePanel.AlignHorizontalCenterWithPanel="True">
-            <Image Source="{Binding game.image}"/>
-            <Grid Margin="16,0,0,0" Width="340">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="32"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Border Padding="4,0,0,0">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
-                            <GradientStop Color="#FF8E96C2" Offset="0"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20" VerticalAlignment="Center"/>
-                        <TextBlock Text="Description" Style="{StaticResource TextStyle}" VerticalAlignment="Center" FontSize="20"/>
-                    </StackPanel>
-                </Border>
-                <ScrollViewer Grid.Row="1" Margin="0,4,0,0">
+        <ScrollViewer VerticalScrollMode="Auto" Grid.Row="1">
+            <VariableSizedWrapGrid x:Name="variableSizedWrapGrid" Orientation="Horizontal" ItemWidth="136" ItemHeight="136"
+                               Margin="16">
+                <Image Source="{Binding game.image}" Margin="0,0,16,16"
+                   VariableSizedWrapGrid.ColumnSpan="2"
+                   VariableSizedWrapGrid.RowSpan="3"/>
+                <ScrollViewer Margin="0,0,16,16"
+                  VariableSizedWrapGrid.ColumnSpan="3"
+                  VariableSizedWrapGrid.RowSpan="3">
                     <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}"/>
                 </ScrollViewer>
-            </Grid>
-            <Grid Margin="16,0,0,0">
-                <controls:InfoBox TitleText="Year Published" Value="{Binding game.yearPublished}" Icon="" VerticalAlignment="Top"/>
-                <controls:InfoBox TitleText="Complexity" Value="{Binding game.weight}" Icon="" VerticalAlignment="Bottom"/>
-            </Grid>
-            <Grid Margin="20,0,0,0">
-                <controls:InfoBox TitleText="Average Rating" Value="{Binding game.average}" Icon="" VerticalAlignment="Top"/>
-                <controls:InfoBox TitleText="Your Rating" Value="{Binding game.rating}" Icon="" VerticalAlignment="Bottom"/>
-            </Grid>
-            <Grid Margin="20,0,0,0">
-                <controls:InfoBox TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon="" VerticalAlignment="Top"/>
-                <controls:InfoBox TitleText="Length" Value="{Binding game.displayPlayTime}" Icon="" VerticalAlignment="Bottom"/>
-            </Grid>
-        </StackPanel>
-        <StackPanel RelativePanel.Below="GameInfo" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="16,0,16,16">
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
-                <TextBlock Text="Desingers: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
-                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" Style="{StaticResource TextStyle}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
-                <TextBlock Text="Artists: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
-                <TextBlock Text="{Binding game.artists, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
-                <TextBlock Text="Expansions: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
-                <TextBlock Text="{Binding game.expansions, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
-                <TextBlock Text="Mechanics: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
-                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text=" " Style="{StaticResource IconStyle}" FontSize="20"/>
-                <TextBlock Text="Categories: " Margin="0,0,8,0" Style="{StaticResource TextStyle}" FontWeight="Medium"/>
-                <TextBlock Text="{Binding game.designers, Converter={StaticResource listToStringConverter}}" TextWrapping="Wrap" />
-            </StackPanel>
-        </StackPanel>
-    </RelativePanel>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Year Published" Value="{Binding game.yearPublished}" Icon=""/>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Complexity" Value="{Binding game.weight}" Icon=""/>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Average Rating" Value="{Binding game.average}" Icon=""/>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Your Rating" Value="{Binding game.rating}" Icon=""/>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon=""/>
+                <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
+                              TitleText="Length" Value="{Binding game.displayPlayTime}" Icon=""/>
+                <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
+                                      TitleText="Designers" Value="{Binding game.designers}" Icon="&#xE90F;"/>
+                <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
+                                      TitleText="Artists" Value="{Binding game.artists}" Icon="&#xE2B1;"/>
+                <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
+                                      TitleText="Expansions" Value="{Binding game.expansions}" Icon="&#xE71B;"/>
+                <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
+                                      TitleText="Mechanics" Value="{Binding game.mechanics}" Icon="&#xE713;"/>
+                <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
+                                      TitleText="Categories" Value="{Binding game.categories}" Icon="&#xE8EC;"/>
+            </VariableSizedWrapGrid>
+        </ScrollViewer>
+    </Grid>
 </Page>

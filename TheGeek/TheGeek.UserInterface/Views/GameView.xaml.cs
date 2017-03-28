@@ -11,7 +11,9 @@ namespace TheGeek.UserInterface.Views
     {
         public GameView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+            variableSizedWrapGrid.RegisterImplicitAnimations();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

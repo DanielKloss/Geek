@@ -67,6 +67,22 @@
             <Setter Property="Padding" Value="8"/>
         </Style>
 
+        <Style x:Key="InfoListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter ContentMargin="4" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               HorizontalContentAlignment="Stretch" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectionCheckMarkVisualEnabled="True" 
+                                               SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" 
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="NoBorderGridViewStyle" TargetType="GridViewItem">
             <Setter Property="Template">
                 <Setter.Value>
