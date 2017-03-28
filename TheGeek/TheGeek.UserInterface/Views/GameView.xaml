@@ -24,20 +24,20 @@
                 <ScrollViewer Margin="0,0,16,16"
                   VariableSizedWrapGrid.ColumnSpan="3"
                   VariableSizedWrapGrid.RowSpan="3">
-                    <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}" Padding="0,0,16,0"/>
                 </ScrollViewer>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Year Published" Value="{Binding game.yearPublished}" Icon=""/>
+                              TitleText="Year Published" Value="{Binding game.yearPublished}" Icon="&#xE1DC;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Complexity" Value="{Binding game.weight}" Icon=""/>
+                              TitleText="Complexity" Value="{Binding game.weight}" Icon="&#xE7BE;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Average Rating" Value="{Binding game.average}" Icon=""/>
+                              TitleText="Average Rating" Value="{Binding game.average}" Icon="&#xE19D;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Your Rating" Value="{Binding game.rating}" Icon=""/>
+                              TitleText="Your Rating" Value="{Binding game.rating}" Icon="&#xE209;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon=""/>
+                              TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon="&#xE716;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Length" Value="{Binding game.displayPlayTime}" Icon=""/>
+                              TitleText="Length" Value="{Binding game.displayPlayTime}" Icon="&#xE2AD;"/>
                 <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
                                       TitleText="Designers" Value="{Binding game.designers}" Icon="&#xE90F;"/>
                 <controls:InfoListBox VariableSizedWrapGrid.ColumnSpan="2" VariableSizedWrapGrid.RowSpan="2" Margin="0,0,16,16"
