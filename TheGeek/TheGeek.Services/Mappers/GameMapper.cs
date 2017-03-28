@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Xml.Linq;
 using TheGeek.Data.Models;
 
@@ -36,7 +37,7 @@ namespace TheGeek.Services.Mappers
 
                 foreach (var game in games)
                 {
-                    existingGame.description = game.description;
+                    existingGame.description = WebUtility.HtmlDecode(game.description);
                     existingGame.weight = Math.Round(Convert.ToDouble(game.weight), 1);
                     existingGame.minAge = Convert.ToInt32(game.minAge);
 
