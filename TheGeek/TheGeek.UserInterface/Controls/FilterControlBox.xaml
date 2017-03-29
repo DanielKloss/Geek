@@ -222,7 +222,7 @@
                 </StackPanel>
                 <TextBlock Text="{Binding Value, ElementName=numberOfPlayersSelector}" HorizontalAlignment="Right" Grid.Column="2"/>
             </Grid>
-            <Slider x:Name="numberOfPlayersSelector" Margin="20,8,20,20" Minimum="1" Maximum="20" Value="{Binding NumberOfPlayers, ElementName=control, Mode=TwoWay}" IsEnabled="{Binding IsWorking, ElementName=control}"/>
+            <Slider x:Name="numberOfPlayersSelector" Margin="20,8,20,20" Minimum="1" Maximum="20" Value="{Binding NumberOfPlayers, ElementName=control, Mode=TwoWay}" IsThumbToolTipEnabled="False" IsEnabled="{Binding IsWorking, ElementName=control}"/>
 
             <Grid Margin="20,0,20,0">
                 <Grid.ColumnDefinitions>
