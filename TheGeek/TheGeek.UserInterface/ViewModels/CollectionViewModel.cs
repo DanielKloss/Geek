@@ -30,6 +30,17 @@ namespace TheGeek.UserInterface.ViewModels
             }
         }
 
+        private bool _isLoggedIn;
+        public bool isLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set
+            {
+                _isLoggedIn = value;
+                OnPropertyChanged(nameof(isLoggedIn));
+            }
+        }
+
         private ObservableCollection<BoardGame> _baseCollection;
         public ObservableCollection<BoardGame> baseCollection
         {
@@ -264,12 +275,29 @@ namespace TheGeek.UserInterface.ViewModels
             set { _chooseRandomGameCommand = value; }
         }
 
+        private ICommand _logoutCommand;
+        public ICommand logoutCommand
+        {
+            get
+            {
+                if (_logoutCommand == null)
+                {
+                    _logoutCommand = new Command(Logout);
+                }
+
+                return _logoutCommand;
+            }
+            set { _logoutCommand = value; }
+        }
+
         public CollectionViewModel(BoardGameRepository BoardGameRepository, GameController GameController, SettingsController SettingsController, Random Random)
         {
             _boardGameRepository = BoardGameRepository;
             _gameController = GameController;
             _settingsController = SettingsController;
             _random = Random;
+
+            IsLoggedIn();
 
             baseCollection = new ObservableCollection<BoardGame>(_gameController.LoadGames());
             filteredbaseCollection = new ObservableCollection<BoardGame>(baseCollection.OrderBy(b => b.name));
@@ -299,6 +327,30 @@ namespace TheGeek.UserInterface.ViewModels
             maximumRating = 10;
         }
 
+        private void IsLoggedIn()
+        {
+            if (_settingsController.GetUsername() == null)
+            {
+                isLoggedIn = false;
+            }
+            else
+            {
+                username = _settingsController.GetUsername().ToString();
+                isLoggedIn = true;
+            }
+        }
+
+        private void Logout()
+        {
+            _settingsController.SetUsername(null);
+
+            _gameController.ClearAllGames();
+
+            filteredbaseCollection.Clear();
+
+            IsLoggedIn();
+        }
+
         private void ShowGameDetail(BoardGame gameToShow)
         {
             ((App)Application.Current).rootFrame.Navigate(typeof(GameView), gameToShow, new DrillInNavigationTransitionInfo());
@@ -308,13 +360,19 @@ namespace TheGeek.UserInterface.ViewModels
         {
             isWorking = true;
 
-            _settingsController.SetUsername(username);
+            if (username != string.Empty)
+            {
 
-            _gameController.ClearAllGames();
+                _settingsController.SetUsername(username);
 
-            filteredbaseCollection.Clear();
-            baseCollection = new ObservableCollection<BoardGame>(await _gameController.GetGames(username));
-            filteredbaseCollection = new ObservableCollection<BoardGame>(baseCollection.OrderBy(b => b.name));
+                IsLoggedIn();
+
+                _gameController.ClearAllGames();
+
+                filteredbaseCollection.Clear();
+                baseCollection = new ObservableCollection<BoardGame>(await _gameController.GetGames(username));
+                filteredbaseCollection = new ObservableCollection<BoardGame>(baseCollection.OrderBy(b => b.name));
+            }
 
             isWorking = false;
         }

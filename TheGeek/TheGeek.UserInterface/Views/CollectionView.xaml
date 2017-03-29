@@ -44,20 +44,16 @@
         </Border>
 
         <Border Grid.Column="1" Background="{StaticResource PrimaryColourBrush}" Height="60" Padding="8,8,8,8" BorderThickness="0,0,0,5" BorderBrush="{StaticResource PrimaryDarkerColourBrush}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}">
                 <Button Content="&#xE8B1;" Command="{Binding chooseRandomGameCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
-                <TextBox Text="{Binding username, Mode=TwoWay}" PlaceholderText="BGG Username" IsEnabled="{Binding IsWorking, ElementName=control}"
-					     Width="152" Style="{StaticResource TextBoxStyle}" BorderThickness="3,3,0,3"/>
-                <Button Content="&#xEA47;" Command="{Binding getBaseCollectionCommand}" Style="{StaticResource IconButtonStyle}"/>
+                <Button Content="&#xE117;" Command="{Binding getBaseCollectionCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
+                <Button Content="&#xE1E0;" Command="{Binding logoutCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
+                <TextBlock Text="&#xE13D;" Style="{StaticResource IconStyle}" Foreground="White" Opacity="1" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding username}" Style="{StaticResource TextStyle}" Foreground="White" Margin="8,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
 
-        <TextBlock Grid.Row="1" Text="The Geek couldn't find any games. Please make sure you have an internet connection and have entered your BGG username correctly."
-                   Visibility="{Binding baseCollection.Count, Converter={StaticResource gamesListVisibilityConverter}}" Padding="16"
-                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-        <GridView ItemsSource="{Binding filteredbaseCollection}" Padding="16" Grid.Row="1"
-			Header="{Binding ItemsSource.Count, Converter={StaticResource gamesCountConverter}, ElementName=GamesList}">
+        <GridView ItemsSource="{Binding filteredbaseCollection}" Padding="16" Grid.Row="1">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
@@ -88,6 +84,21 @@
             </GridView.ItemTemplate>
         </GridView>
 
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding filteredbaseCollection.Count, Converter={StaticResource gamesCountConverter}}">
+            <TextBlock Text="The Geek couldn't find any games in that user's collection. Please logout and try again" Padding="16"
+                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding isLoggedIn, Converter={StaticResource inverseVisibilityConverter}}">
+            <TextBlock Text="The Geek uses your BoardGameGeek.com account to get all your games. Please Enter your BoardGameGeek username below" Padding="16"
+                   Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Text="{Binding username, Mode=TwoWay}" PlaceholderText="BGG Username"
+					     Width="152" Style="{StaticResource TextBoxStyle}" BorderThickness="3,3,0,3"/>
+                <Button Content="&#xEA47;" Command="{Binding getBaseCollectionCommand}" Style="{StaticResource IconButtonStyle}"/>
+            </StackPanel>
+        </StackPanel>
+
         <Grid Padding="8,8,8,8" Grid.Column="1" Grid.Row="1" Background="{StaticResource PrimaryColourBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -108,7 +119,6 @@
         </Grid>
 
         <Grid Grid.Row="1" Background="White" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}"/>
-        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Background="Gray" Opacity="0.75"/>
         <ProgressRing Grid.Row="1" IsActive="{Binding isWorking}" Height="48" Width="48" Foreground="{StaticResource PrimaryColourBrush}"/>
         <TextBlock Grid.Row="1" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Text="The Geek is getting your games from BGG"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Style="{StaticResource SubHeaderStyle}"
