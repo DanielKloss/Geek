@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 namespace TheGeek.UserInterface
 {
@@ -75,6 +79,46 @@ namespace TheGeek.UserInterface
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public static class EnterKeyHelpers
+    {
+        public static ICommand GetEnterKeyCommand(DependencyObject target)
+        {
+            return (ICommand)target.GetValue(EnterKeyCommandProperty);
+        }
+
+        public static void SetEnterKeyCommand(DependencyObject target, ICommand value)
+        {
+            target.SetValue(EnterKeyCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty EnterKeyCommandProperty =
+            DependencyProperty.RegisterAttached(
+                "EnterKeyCommand",
+                typeof(ICommand),
+                typeof(EnterKeyHelpers),
+                new PropertyMetadata(null, OnEnterKeyCommandChanged));
+
+        static void OnEnterKeyCommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        {
+            ICommand command = (ICommand)e.NewValue;
+            FrameworkElement fe = (FrameworkElement)target;
+            Control control = (Control)target;
+            control.KeyDown += (s, args) =>
+            {
+                if (args.Key == VirtualKey.Enter)
+                {
+                    // make sure the textbox binding updates its source first
+                    BindingExpression b = control.GetBindingExpression(TextBox.TextProperty);
+                    if (b != null)
+                    {
+                        b.UpdateSource();
+                    }
+                    command.Execute(null);
+                }
+            };
         }
     }
 }

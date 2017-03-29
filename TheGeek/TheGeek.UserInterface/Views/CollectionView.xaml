@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:TheGeek.UserInterface"
     xmlns:controls="using:TheGeek.UserInterface.Controls"
     mc:Ignorable="d">
 
@@ -93,8 +94,10 @@
             <TextBlock Text="The Geek uses your BoardGameGeek.com account to get all your games. Please Enter your BoardGameGeek username below" Padding="16"
                    Style="{StaticResource SubHeaderStyle}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBox Text="{Binding username, Mode=TwoWay}" PlaceholderText="BGG Username"
-					     Width="152" Style="{StaticResource TextBoxStyle}" BorderThickness="3,3,0,3"/>
+                <TextBox Text="{Binding username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="BGG Username" 
+					     Width="152" Style="{StaticResource TextBoxStyle}" BorderThickness="3,3,0,3"
+                         local:EnterKeyHelpers.EnterKeyCommand="{Binding getBaseCollectionCommand}">
+                </TextBox>
                 <Button Content="&#xEA47;" Command="{Binding getBaseCollectionCommand}" Style="{StaticResource IconButtonStyle}"/>
             </StackPanel>
         </StackPanel>
