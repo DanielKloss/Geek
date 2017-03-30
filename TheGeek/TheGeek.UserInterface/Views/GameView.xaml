@@ -21,11 +21,26 @@
                 <Image Source="{Binding game.image}" Margin="0,0,16,16"
                    VariableSizedWrapGrid.ColumnSpan="2"
                    VariableSizedWrapGrid.RowSpan="3"/>
-                <ScrollViewer Margin="0,0,16,16"
-                  VariableSizedWrapGrid.ColumnSpan="3"
-                  VariableSizedWrapGrid.RowSpan="3">
-                    <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}" Padding="0,0,16,0"/>
-                </ScrollViewer>
+
+                <Grid Margin="0,0,16,16"
+                      VariableSizedWrapGrid.ColumnSpan="3"
+                      VariableSizedWrapGrid.RowSpan="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Padding="8,8,8,8" Grid.Row="0" Background="{StaticResource PrimaryLightestColourBrush}"
+                            BorderBrush="{StaticResource PrimaryDarkestColourBrush}" BorderThickness="3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE1A1;" Style="{StaticResource IconBackgroundStyle}" FontSize="20" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="Description" Style="{StaticResource TextStyle}" VerticalAlignment="Center" FontSize="20"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" BorderBrush="{StaticResource PrimaryDarkestColourBrush}" BorderThickness="3" Margin="0,-3,0,0">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding game.description}" Style="{StaticResource TextStyle}" Padding="16"/>
+                    </ScrollViewer>
+                </Grid>
+                
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
                               TitleText="Year Published" Value="{Binding game.yearPublished}" Icon="&#xE1DC;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
