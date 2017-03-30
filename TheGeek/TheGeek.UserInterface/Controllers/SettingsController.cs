@@ -21,7 +21,7 @@ namespace TheGeek.UserInterface.Controllers
 
         public string GetUsername()
         {
-            return ApplicationData.Current.LocalSettings.Values[_username].ToString();
+            return ApplicationData.Current.LocalSettings.Values[_username]?.ToString();
         }
 
         public void SetUsername(string username)

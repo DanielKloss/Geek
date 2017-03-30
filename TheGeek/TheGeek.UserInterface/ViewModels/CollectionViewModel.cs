@@ -291,6 +291,21 @@ namespace TheGeek.UserInterface.ViewModels
             set { _logoutCommand = value; }
         }
 
+        private ICommand _aboutCommand;
+        public ICommand aboutCommand
+        {
+            get
+            {
+                if (_aboutCommand == null)
+                {
+                    _aboutCommand = new Command(NavigateToAbout);
+                }
+
+                return _aboutCommand;
+            }
+            set { _aboutCommand = value; }
+        }
+
         public CollectionViewModel(BoardGameRepository BoardGameRepository, GameController GameController, SettingsController SettingsController, Random Random)
         {
             _boardGameRepository = BoardGameRepository;
@@ -375,6 +390,11 @@ namespace TheGeek.UserInterface.ViewModels
         private void ShowGameDetail(BoardGame gameToShow)
         {
             ((App)Application.Current).rootFrame.Navigate(typeof(GameView), gameToShow, new DrillInNavigationTransitionInfo());
+        }
+
+        private void NavigateToAbout()
+        {
+            ((App)Application.Current).rootFrame.Navigate(typeof(AboutView), new DrillInNavigationTransitionInfo());
         }
 
         private async void GetBaseCollectionOwned()
