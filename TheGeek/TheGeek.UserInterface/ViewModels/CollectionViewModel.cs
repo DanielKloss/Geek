@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -316,26 +317,46 @@ namespace TheGeek.UserInterface.ViewModels
             isFiltered = false;
             filterText = "";
             searchType = 0;
-            minimumComplexity = 0;
-            maximumComplexity = 5;
-            minimumLength = 0;
-            maximumLength = 60;
-            numberOfPlayers = 4;
-            minimumAverageRating = 0;
-            maximumAverageRating = 10;
-            minimumRating = 0;
-            maximumRating = 10;
+
+            SetFilters();
+        }
+
+        private void SetFilters()
+        {
+            isFiltered = _settingsController.GetIsFiltered();
+
+            numberOfPlayers = _settingsController.GetNumberOfPlayers() == 0 ? 4 : _settingsController.GetNumberOfPlayers();
+
+            minimumComplexity = _settingsController.GetMinimumComplexity();
+            minimumAverageRating = _settingsController.GetMinimumAverageRating();
+            minimumRating = _settingsController.GetMinimumRating();
+            minimumLength = _settingsController.GetMinimumLength();
+
+            maximumComplexity = _settingsController.GetMaximumComplexity() == 0 ? 5 : _settingsController.GetMaximumComplexity();
+            maximumLength = _settingsController.GetMaximumLength() == 0 ? 60 : _settingsController.GetMaximumLength();
+            maximumAverageRating = _settingsController.GetMaximumAverageRating() == 0 ? 10 : _settingsController.GetMaximumAverageRating();
+            maximumRating = _settingsController.GetMaximumRating() == 0 ? 10 : _settingsController.GetMaximumRating();
+
+            filterText = _settingsController.GetSearchTerm();
+            searchType = _settingsController.GetCategoryIndex();
+        }
+
+        internal void SaveFilters()
+        {
+            _settingsController.SetFilters(numberOfPlayers, minimumRating, maximumRating, minimumAverageRating, maximumAverageRating, minimumComplexity, maximumComplexity, minimumLength, maximumLength);
+            _settingsController.SetIsFiltered(isFiltered);
+            _settingsController.SetSearch(filterText, searchType);
         }
 
         private void IsLoggedIn()
         {
-            if (_settingsController.GetUsername() == null)
+            if (_settingsController.GetUsername() == null || _settingsController.GetUsername() == String.Empty)
             {
                 isLoggedIn = false;
             }
             else
             {
-                username = _settingsController.GetUsername().ToString();
+                username = _settingsController.GetUsername();
                 isLoggedIn = true;
             }
         }

@@ -19,6 +19,12 @@ namespace TheGeek.UserInterface.Views
             InitializeComponent();
         }
 
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            var viewModel = (CollectionViewModel)DataContext;
+            viewModel.SaveFilters();
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             BoardGameRepository boardGameRepository = new BoardGameRepository();
