@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmDialogs;
+using System;
 using System.Collections.Generic;
 using TheGeek.Data.Models;
 using TheGeek.Data.Repositories;
@@ -30,9 +31,10 @@ namespace TheGeek.UserInterface.Views
             BoardGameRepository boardGameRepository = new BoardGameRepository();
             GameController gameController = new GameController(new GameMapper(), new GameService(), new CollectionMapper(), new CollectionService(), new BoardGameRepository());
             SettingsController settingsController = new SettingsController();
+            DialogService dialogService = new DialogService();
             Random random = new Random();
 
-            DataContext = new CollectionViewModel(boardGameRepository, gameController, settingsController, random);
+            DataContext = new CollectionViewModel(boardGameRepository, gameController, settingsController, dialogService, random);
 
             CheckScreenWidth();
         }

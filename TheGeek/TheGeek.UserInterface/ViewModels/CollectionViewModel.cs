@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MvvmDialogs;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -8,12 +8,14 @@ using TheGeek.Data.Repositories;
 using TheGeek.UserInterface.Controllers;
 using TheGeek.UserInterface.Views;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace TheGeek.UserInterface.ViewModels
 {
     public class CollectionViewModel : BaseViewModel
     {
+        private IDialogService _dialogService;
         private GameController _gameController;
         private BoardGameRepository _boardGameRepository;
         private SettingsController _settingsController;
@@ -261,6 +263,20 @@ namespace TheGeek.UserInterface.ViewModels
             set { _getBaseCollectionCommand = value; }
         }
 
+        private ICommand _refreshCollectionCommand;
+        public ICommand refreshCollectionCommand
+        {
+            get
+            {
+                if (_refreshCollectionCommand == null)
+                {
+                    _refreshCollectionCommand = new Command(refreshCollection);
+                }
+                return _refreshCollectionCommand;
+            }
+            set { _refreshCollectionCommand = value; }
+        }
+
         private ICommand _chooseRandomGameCommand;
         public ICommand chooseRandomGameCommand
         {
@@ -306,8 +322,9 @@ namespace TheGeek.UserInterface.ViewModels
             set { _aboutCommand = value; }
         }
 
-        public CollectionViewModel(BoardGameRepository BoardGameRepository, GameController GameController, SettingsController SettingsController, Random Random)
+        public CollectionViewModel(BoardGameRepository BoardGameRepository, GameController GameController, SettingsController SettingsController, IDialogService dialogService, Random Random)
         {
+            _dialogService = dialogService;
             _boardGameRepository = BoardGameRepository;
             _gameController = GameController;
             _settingsController = SettingsController;
@@ -376,15 +393,21 @@ namespace TheGeek.UserInterface.ViewModels
             }
         }
 
-        private void Logout()
+        private async void Logout()
         {
-            _settingsController.SetUsername(null);
+            var dialogViewModel = new ConfirmContentDialogViewModel("Logout", "Are you sure you want to logout?");
 
-            _gameController.ClearAllGames();
+            ContentDialogResult result = await _dialogService.ShowContentDialogAsync(dialogViewModel);
+            if (result == ContentDialogResult.Primary)
+            {
+                _settingsController.SetUsername(null);
 
-            filteredbaseCollection.Clear();
+                _gameController.ClearAllGames();
 
-            IsLoggedIn();
+                filteredbaseCollection.Clear();
+
+                IsLoggedIn();
+            }
         }
 
         private void ShowGameDetail(BoardGame gameToShow)
@@ -397,13 +420,23 @@ namespace TheGeek.UserInterface.ViewModels
             ((App)Application.Current).rootFrame.Navigate(typeof(AboutView), new DrillInNavigationTransitionInfo());
         }
 
+        private async void refreshCollection()
+        {
+            var dialogViewModel = new ConfirmContentDialogViewModel("Refresh Collection", "Are you sure you want to refresh the collection for this user?");
+
+            ContentDialogResult result = await _dialogService.ShowContentDialogAsync(dialogViewModel);
+            if (result == ContentDialogResult.Primary)
+            {
+                GetBaseCollectionOwned();
+            }
+        }
+
         private async void GetBaseCollectionOwned()
         {
             isWorking = true;
 
             if (username != string.Empty)
             {
-
                 _settingsController.SetUsername(username);
 
                 IsLoggedIn();

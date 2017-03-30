@@ -49,7 +49,7 @@
                 <Button Content="&#xE946;" Command="{Binding aboutCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}">
                     <Button Content="&#xE8B1;" Command="{Binding chooseRandomGameCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
-                    <Button Content="&#xE117;" Command="{Binding getBaseCollectionCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
+                    <Button Content="&#xE117;" Command="{Binding refreshCollectionCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
                     <Button Content="&#xE1E0;" Command="{Binding logoutCommand}" Margin="0,0,8,0" Style="{StaticResource IconButtonStyle}"/>
                     <TextBlock Text="&#xE13D;" Style="{StaticResource IconStyle}" Foreground="White" Opacity="1" Margin="8,0,0,0" VerticalAlignment="Center"/>
                     <TextBlock Text="{Binding username}" Style="{StaticResource TextStyle}" Foreground="White" Margin="8,0" VerticalAlignment="Center"/>
