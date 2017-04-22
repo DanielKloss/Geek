@@ -9,6 +9,19 @@
     xmlns:controls="using:TheGeek.UserInterface.Controls"
     mc:Ignorable="d">
 
+    <Page.BottomAppBar>
+        <CommandBar x:Name="AppBar" Visibility="Collapsed">
+            <AppBarButton Label="About" Command="{Binding aboutCommand}">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE946;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Icon="Shuffle" Label="Choose Random Game" Command="{Binding chooseRandomGameCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
+            <AppBarButton Icon="Refresh" Label="Refresh Games" Command="{Binding refreshCollectionCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
+            <AppBarButton Icon="BlockContact" Label="Logout" Command="{Binding logoutCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged">
@@ -24,6 +37,7 @@
                     <VisualState.Setters>
                         <Setter Target="MasterColumn.Width" Value="*" />
                         <Setter Target="DetailColumn.Width" Value="0" />
+                        <Setter Target="AppBar.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

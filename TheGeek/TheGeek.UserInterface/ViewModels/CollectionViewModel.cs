@@ -480,6 +480,8 @@ namespace TheGeek.UserInterface.ViewModels
                     }
                 }
             }
+
+            filteredbaseCollection = new ObservableCollection<BoardGame>(filteredbaseCollection.OrderBy(b => b.name));
         }
 
         private bool TextSearch(BoardGame game, int searchType)
