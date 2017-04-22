@@ -124,7 +124,7 @@
     <EmbeddedResource Include="Properties\TheGeek.Data.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.17.0">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.18.0">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>

@@ -2,8 +2,11 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace TheGeek.UserInterface.Views
 {
@@ -17,6 +20,28 @@ namespace TheGeek.UserInterface.Views
             {
                 feedbackButton.Visibility = Visibility.Visible;
             }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.BackRequested += GameView_BackRequested;
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        private void GameView_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            Frame.GoBack(new SuppressNavigationTransitionInfo());
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.BackRequested -= GameView_BackRequested;
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         private async void moreInfoButton_Click(object sender, RoutedEventArgs e)
