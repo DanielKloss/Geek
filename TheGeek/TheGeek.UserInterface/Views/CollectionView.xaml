@@ -11,14 +11,27 @@
 
     <Page.BottomAppBar>
         <CommandBar x:Name="AppBar" Visibility="Collapsed">
+            <AppBarButton Icon="Filter" Label="Filter" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <controls:FilterControlBox Grid.Row="1" Margin="0,32,0,0" Height="auto" IsMini="True"
+                                       IsFiltered="{Binding isFiltered, Mode=TwoWay}" NumberOfPlayers="{Binding numberOfPlayers, Mode=TwoWay}" IsWorking="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}"
+                                       AvRatingMax="{Binding maximumAverageRating, Mode=TwoWay}" AvRatingMin="{Binding minimumAverageRating, Mode=TwoWay}"
+                                       RatingMax="{Binding maximumRating, Mode=TwoWay}" RatingMin="{Binding minimumRating, Mode=TwoWay}"
+                                       ComplexityMax="{Binding maximumComplexity, Mode=TwoWay}" ComplexityMin="{Binding minimumComplexity, Mode=TwoWay}"
+                                       LengthMax="{Binding maximumLength, Mode=TwoWay}" LengthMin="{Binding minimumLength, Mode=TwoWay}"/>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Shuffle" Label="Choose Random Game" Command="{Binding chooseRandomGameCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
+            <AppBarButton Icon="Refresh" Label="Refresh Games" Command="{Binding refreshCollectionCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
+            <AppBarSeparator/>
+            <AppBarButton Icon="BlockContact" Label="Logout" Command="{Binding logoutCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
             <AppBarButton Label="About" Command="{Binding aboutCommand}">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE946;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Icon="Shuffle" Label="Choose Random Game" Command="{Binding chooseRandomGameCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
-            <AppBarButton Icon="Refresh" Label="Refresh Games" Command="{Binding refreshCollectionCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
-            <AppBarButton Icon="BlockContact" Label="Logout" Command="{Binding logoutCommand}" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}"/>
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -131,7 +144,7 @@
                                          SearchCategories="{Binding searchCategories}" IsWorking="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}"
                                          SelectedSearchCategory="{Binding searchType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-            <controls:FilterControlBox Grid.Row="1" Margin="0,32,0,0" Height="auto"
+            <controls:FilterControlBox Grid.Row="1" Margin="0,32,0,0" Height="auto" IsMini="False"
                                        IsFiltered="{Binding isFiltered, Mode=TwoWay}" NumberOfPlayers="{Binding numberOfPlayers, Mode=TwoWay}" IsWorking="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}"
                                        AvRatingMax="{Binding maximumAverageRating, Mode=TwoWay}" AvRatingMin="{Binding minimumAverageRating, Mode=TwoWay}"
                                        RatingMax="{Binding maximumRating, Mode=TwoWay}" RatingMin="{Binding minimumRating, Mode=TwoWay}"

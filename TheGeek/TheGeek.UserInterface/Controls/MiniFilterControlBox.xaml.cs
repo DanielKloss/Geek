@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace TheGeek.UserInterface.Controls
 {
-    public sealed partial class FilterControlBox : UserControl
+    public sealed partial class MiniFilterControlBox : UserControl
     {
         public static readonly DependencyProperty IsFilteredProperty = DependencyProperty.Register("IsFiltered", typeof(bool), typeof(FilterControlBox), new PropertyMetadata(false));
         public bool IsFiltered
@@ -82,16 +82,9 @@ namespace TheGeek.UserInterface.Controls
             set { SetValue(NumberOfPlayersProperty, value); }
         }
 
-        public static readonly DependencyProperty IsMiniProperty = DependencyProperty.Register("IsMini", typeof(bool), typeof(FilterControlBox), new PropertyMetadata(false));
-        public bool IsMini
+        public MiniFilterControlBox()
         {
-            get { return (bool)GetValue(IsMiniProperty); }
-            set { SetValue(IsMiniProperty, value); }
-        }
-
-        public FilterControlBox()
-        {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

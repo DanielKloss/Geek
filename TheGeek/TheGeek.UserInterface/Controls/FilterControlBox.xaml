@@ -209,7 +209,8 @@
     </UserControl.Resources>
 
     <Grid>
-        <StackPanel Padding="0,40,0,0" Margin="0" BorderThickness="3" BorderBrush="{StaticResource PrimaryDarkestColourBrush}" Background="White" Visibility="{Binding IsFiltered, ElementName=control, Converter={StaticResource visibilityConverter}}">
+        <StackPanel Padding="0,40,0,0" Margin="0,0,0,40" BorderThickness="3" BorderBrush="{StaticResource PrimaryDarkestColourBrush}" Background="White" 
+                    Visibility="{Binding IsFiltered, ElementName=control, Converter={StaticResource visibilityConverter}}">
             <Grid Margin="20,0,20,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -285,7 +286,7 @@
             <controls:RangeSelector x:Name="lengthRangeSelector" Margin="16,8,16,20" Minimum="0" RangeMin="{Binding LengthMin, ElementName=control, Mode=TwoWay}" Maximum="360" RangeMax="{Binding LengthMax, ElementName=control, Mode=TwoWay}" IsEnabled="{Binding IsWorking, ElementName=control}"/>
         </StackPanel>
 
-        <ToggleButton IsChecked="{Binding IsFiltered, ElementName=control, Mode=TwoWay}" Margin="0,-16,0,0" HorizontalAlignment="Stretch" 
+        <ToggleButton Visibility="{Binding IsMini, ElementName=control, Converter={StaticResource inverseVisibilityConverter}}" IsChecked="{Binding IsFiltered, ElementName=control, Mode=TwoWay}" Margin="0,-16,0,0" HorizontalAlignment="Stretch" 
                       Background="{StaticResource PrimaryLightestColourBrush}" BorderBrush="{StaticResource PrimaryDarkestColourBrush}" BorderThickness="3" 
                       VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyle}" Template="{StaticResource ToggleButtonControlTemplate}">
             <StackPanel Orientation="Horizontal">
@@ -296,5 +297,9 @@
 						Visibility="{Binding IsFiltered, ElementName=control, Converter={StaticResource visibilityConverter}}"/>
             </StackPanel>
         </ToggleButton>
+
+        <ToggleSwitch Visibility="{Binding IsMini, ElementName=control, Converter={StaticResource visibilityConverter}}"
+                      OnContent="Filter On" OffContent="Filter Off" IsOn="{Binding IsFiltered, ElementName=control, Mode=TwoWay}" Margin="0,0,0,0" 
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </UserControl>

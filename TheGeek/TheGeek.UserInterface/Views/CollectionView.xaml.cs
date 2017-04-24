@@ -1,7 +1,5 @@
 ﻿using MvvmDialogs;
 using System;
-using System.Collections.Generic;
-using TheGeek.Data.Models;
 using TheGeek.Data.Repositories;
 using TheGeek.Services.Mappers;
 using TheGeek.Services.Services;
