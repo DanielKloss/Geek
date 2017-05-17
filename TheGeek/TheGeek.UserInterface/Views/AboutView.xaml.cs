@@ -1,6 +1,8 @@
 ﻿using Microsoft.Services.Store.Engagement;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 using System;
 using Windows.ApplicationModel;
+using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -15,6 +17,11 @@ namespace TheGeek.UserInterface.Views
         public AboutView()
         {
             InitializeComponent();
+
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                StatusBar.SetIsVisible(this, false);
+            }
 
             if (StoreServicesFeedbackLauncher.IsSupported())
             {

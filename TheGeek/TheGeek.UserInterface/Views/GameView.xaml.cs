@@ -1,5 +1,7 @@
-﻿using TheGeek.Data.Models;
+﻿using Microsoft.Toolkit.Uwp.UI.Extensions;
+using TheGeek.Data.Models;
 using TheGeek.UserInterface.ViewModels;
+using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -14,6 +16,11 @@ namespace TheGeek.UserInterface.Views
             InitializeComponent();
 
             variableSizedWrapGrid.RegisterImplicitAnimations();
+
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                StatusBar.SetIsVisible(this, false);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

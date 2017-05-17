@@ -8,6 +8,24 @@
     mc:Ignorable="d">
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DescriptionGrid.Tag" Value="2" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
@@ -17,13 +35,13 @@
         </Border>
         <ScrollViewer VerticalScrollMode="Auto" Grid.Row="1">
             <VariableSizedWrapGrid x:Name="variableSizedWrapGrid" Orientation="Horizontal" ItemWidth="136" ItemHeight="136"
-                               Margin="16">
+                               Margin="16" HorizontalAlignment="Center">
                 <Image Source="{Binding game.image}" Margin="0,0,16,16"
                    VariableSizedWrapGrid.ColumnSpan="2"
                    VariableSizedWrapGrid.RowSpan="3"/>
 
-                <Grid Margin="0,0,16,16"
-                      VariableSizedWrapGrid.ColumnSpan="3"
+                <Grid Margin="0,0,16,16" x:Name="DescriptionGrid" Tag="3"
+                      VariableSizedWrapGrid.ColumnSpan="{Binding Tag, ElementName=DescriptionGrid}"
                       VariableSizedWrapGrid.RowSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>

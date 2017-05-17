@@ -221,7 +221,7 @@
                     <TextBlock Text="&#xE125;" Style="{StaticResource IconStyle}"/>
                     <TextBlock Text="Number of Players" Margin="8,0,0,0"/>
                 </StackPanel>
-                <TextBlock Text="{Binding Value, ElementName=numberOfPlayersSelector}" HorizontalAlignment="Right" Grid.Column="2"/>
+                <TextBlock Text="{Binding Value, ElementName=numberOfPlayersSelector}" HorizontalAlignment="Right" Grid.Column="2" Margin="12,0,0,0"/>
             </Grid>
             <Slider x:Name="numberOfPlayersSelector" Margin="20,8,20,20" Minimum="1" Maximum="20" Value="{Binding NumberOfPlayers, ElementName=control, Mode=TwoWay}" IsThumbToolTipEnabled="False" IsEnabled="{Binding IsWorking, ElementName=control}"/>
 
@@ -300,6 +300,6 @@
 
         <ToggleSwitch Visibility="{Binding IsMini, ElementName=control, Converter={StaticResource visibilityConverter}}"
                       OnContent="Filter On" OffContent="Filter Off" IsOn="{Binding IsFiltered, ElementName=control, Mode=TwoWay}" Margin="0,0,0,0" 
-                      HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource ToggleSwitchStyle}"/>
     </Grid>
 </UserControl>

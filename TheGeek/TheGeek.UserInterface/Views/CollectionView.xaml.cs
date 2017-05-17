@@ -1,10 +1,12 @@
-﻿using MvvmDialogs;
+﻿using Microsoft.Toolkit.Uwp.UI.Extensions;
+using MvvmDialogs;
 using System;
 using TheGeek.Data.Repositories;
 using TheGeek.Services.Mappers;
 using TheGeek.Services.Services;
 using TheGeek.UserInterface.Controllers;
 using TheGeek.UserInterface.ViewModels;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,6 +18,11 @@ namespace TheGeek.UserInterface.Views
         public CollectionView()
         {
             InitializeComponent();
+
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                StatusBar.SetIsVisible(this, false);
+            }
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

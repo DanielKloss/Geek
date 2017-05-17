@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Page.BottomAppBar>
-        <CommandBar x:Name="AppBar" Visibility="Collapsed">
+        <CommandBar x:Name="AppBar" Visibility="Collapsed" IsEnabled="{Binding isWorking, Converter={StaticResource inverseBoolConverter}}">
             <AppBarButton Icon="Filter" Label="Filter" Visibility="{Binding isLoggedIn, Converter={StaticResource visibilityConverter}}">
                 <AppBarButton.Flyout>
                     <Flyout>
@@ -155,7 +155,7 @@
         <Grid Grid.Row="1" Background="White" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}"/>
         <ProgressRing Grid.Row="1" IsActive="{Binding isWorking}" Height="48" Width="48" Foreground="{StaticResource PrimaryColourBrush}"/>
         <TextBlock Grid.Row="1" Visibility="{Binding isWorking, Converter={StaticResource visibilityConverter}}" Text="The Geek is getting your games from BGG"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Style="{StaticResource SubHeaderStyle}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,200,0,0" Style="{StaticResource SubHeaderStyle}"
                    TextWrapping="Wrap" TextAlignment="Center"/>
     </Grid>
 </Page>
