@@ -100,9 +100,6 @@
     <Compile Include="Command.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Controls\MiniFilterControlBox.xaml.cs">
-      <DependentUpon>MiniFilterControlBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConfirmContentDialog.xaml.cs">
       <DependentUpon>ConfirmContentDialog.xaml</DependentUpon>
     </Compile>
@@ -166,10 +163,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\MiniFilterControlBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ConfirmContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
