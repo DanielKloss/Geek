@@ -10,10 +10,19 @@ namespace TheGeek.Services.Services
         public async Task<string> GetImageAsync(string url, string gameId)
         {
             HttpClient webClient = new HttpClient();
-            byte[] image = await webClient.GetByteArrayAsync(url);
+            byte[] image;
+            StorageFile imageFile;
 
-            StorageFile imageFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(gameId, CreationCollisionOption.OpenIfExists);
-            await FileIO.WriteBytesAsync(imageFile, image);
+            try
+            {
+                image = await webClient.GetByteArrayAsync(url);
+                imageFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(gameId, CreationCollisionOption.OpenIfExists);
+                await FileIO.WriteBytesAsync(imageFile, image);
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
 
             return imageFile.Path;
         }

@@ -60,13 +60,13 @@
                 </Grid>
                 
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Year Published" Value="{Binding game.yearPublished}" Icon="&#xE1DC;"/>
+                              TitleText="Year Published" Value="{Binding game.yearPublished, Converter={StaticResource zeroConverter}}" Icon="&#xE1DC;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Complexity" Value="{Binding game.weight}" Icon="&#xE7BE;"/>
+                              TitleText="Complexity" Value="{Binding game.weight, Converter={StaticResource zeroConverter}}" Icon="&#xE7BE;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Average Rating" Value="{Binding game.average}" Icon="&#xE19D;"/>
+                              TitleText="Average Rating" Value="{Binding game.average, Converter={StaticResource zeroConverter}}" Icon="&#xE19D;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
-                              TitleText="Your Rating" Value="{Binding game.rating}" Icon="&#xE209;"/>
+                              TitleText="Your Rating" Value="{Binding game.rating, Converter={StaticResource zeroConverter}}" Icon="&#xE209;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"
                               TitleText="Players" Value="{Binding game.numberOfPlayers}" Icon="&#xE716;"/>
                 <controls:InfoBox VariableSizedWrapGrid.ColumnSpan="1" VariableSizedWrapGrid.RowSpan="1" Margin="0,0,16,16"

@@ -1,7 +1,9 @@
 ﻿using MvvmDialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TheGeek.Data.Models;
 using TheGeek.Data.Repositories;
@@ -441,11 +443,20 @@ namespace TheGeek.UserInterface.ViewModels
 
                 IsLoggedIn();
 
-                _gameController.ClearAllGames();
-
-                filteredbaseCollection.Clear();
                 baseCollection = new ObservableCollection<BoardGame>(await _gameController.GetGames(username));
-                filteredbaseCollection = new ObservableCollection<BoardGame>(baseCollection.OrderBy(b => b.name));
+
+                if (baseCollection.Count == 0)
+                {
+                    var dialogViewModel = new NoConfirmContentDialogViewModel("No Games Found", "No games were found for this BGG user");
+
+                    await _dialogService.ShowContentDialogAsync(dialogViewModel);
+                    baseCollection = filteredbaseCollection;
+                }
+                else
+                {
+                    filteredbaseCollection = new ObservableCollection<BoardGame>(baseCollection.OrderBy(b => b.name));
+                    _boardGameRepository.InsertBoardGames(new List<BoardGame>(baseCollection));
+                }
             }
 
             isWorking = false;

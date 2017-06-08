@@ -17,10 +17,10 @@
         <ScrollViewer VerticalScrollMode="Auto" VerticalAlignment="Top" Grid.Row="1" Padding="16">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
-                    <Image Source="" Height="50" Margin="0,0,12,0"/>
+                    <Image Source="..\Assets\TheGeekLogo.png" Height="50" Margin="0,0,12,0"/>
                     <StackPanel>
                         <TextBlock Text="The Geek" Style="{StaticResource SubHeaderStyle}"/>
-                        <TextBlock Text="Version 1.0" Style="{StaticResource TextStyle}"/>
+                        <TextBlock Text="Version 1.1" Style="{StaticResource TextStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <TextBlock Text="The Geek links to your BoardGameGeek account to display your games and help you decide what to play! Filter and search your collection or if you're really stuck getThe Geek to choose a random game for you!"

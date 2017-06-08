@@ -114,6 +114,7 @@
     <Compile Include="Services\CollectionService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\ImageDownloadService.cs" />
+    <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="Properties\TheGeek.Services.rd.xml" />
   </ItemGroup>
   <ItemGroup />

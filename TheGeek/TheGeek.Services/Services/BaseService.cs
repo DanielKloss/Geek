@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,29 +16,38 @@ namespace TheGeek.Services.Services
         {
             string responseData = string.Empty;
 
-            //Invoke request
-            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+            HttpWebResponse response;
 
-            if (response.StatusCode == HttpStatusCode.Accepted)
+            try
             {
-                return await MakeRequestAsync(request);
-            }
-            else if (response.StatusCode == HttpStatusCode.OK)
-            {
-                using (response)
+                //Invoke request
+                response = await request.GetResponseAsync() as HttpWebResponse;
+
+                if (response.StatusCode == HttpStatusCode.Accepted)
                 {
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                    {
-                        //Read data
-                        responseData = await reader.ReadToEndAsync();
-                    }
+                    return await MakeRequestAsync(request);
                 }
+                else if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (response)
+                    {
+                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            //Read data
+                            responseData = await reader.ReadToEndAsync();
+                        }
+                    }
 
-                return responseData;
+                    return responseData;
+                }
+                else
+                {
+                    return responseData;
+                }
             }
-            else
+            catch (WebException)
             {
-                return responseData;
+                return string.Empty;
             }
         }
     }

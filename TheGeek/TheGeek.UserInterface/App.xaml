@@ -14,6 +14,7 @@
         <converters:GamesCountConverter x:Key="gamesCountConverter"/>
         <converters:NumberRounderConverter x:Key="numberRounderConverter"/>
         <converters:GamesListVisibilityConverter x:Key="gamesListVisibilityConverter"/>
+        <converters:ZeroConverter x:Key="zeroConverter"/>
 
         <SolidColorBrush x:Key="PrimaryColourBrush" Color="#3D4986"/>
         <SolidColorBrush x:Key="PrimaryLighterColourBrush" Color="#5F6AA1"/>

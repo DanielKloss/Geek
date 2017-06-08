@@ -49,8 +49,6 @@ namespace TheGeek.UserInterface.Controllers
 
             baseCollection = _gameMapper.Map(baseCollection, response);
 
-            _boardGameRepository.InsertBoardGames(baseCollection);
-
             return baseCollection;
         }
 

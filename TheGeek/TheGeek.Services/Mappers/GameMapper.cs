@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Xml;
 using System.Xml.Linq;
 using TheGeek.Data.Models;
 
@@ -11,7 +12,16 @@ namespace TheGeek.Services.Mappers
     {
         public List<BoardGame> Map(List<BoardGame> existingGames, string response)
         {
-            XDocument xmlFile = XDocument.Parse(response);
+            XDocument xmlFile;
+
+            try
+            {
+                xmlFile = XDocument.Parse(response);
+            }
+            catch (XmlException)
+            {
+                return new List<BoardGame>();
+            }
 
             foreach (BoardGame existingGame in existingGames)
             {
@@ -19,14 +29,14 @@ namespace TheGeek.Services.Mappers
                             where game.Attribute("id").Value == existingGame.boardGameId.ToString()
                             select new
                             {
-                                description = game.Element("description").Value,
-                                weight = game.Element("statistics").Element("ratings").Element("averageweight").Attribute("value").Value,
-                                minAge = game.Element("minage").Attribute("value").Value,
-                                desingers = game.Elements("link").Where(t => t.Attribute("type").Value == "boardgamedesigner"),
-                                categories = game.Elements("link").Where(t => t.Attribute("type").Value == "boardgamecategory"),
-                                mechanics = game.Elements("link").Where(t => t.Attribute("type").Value == "boardgamemechanic"),
-                                expansions = game.Elements("link").Where(t => t.Attribute("type").Value == "boardgameexpansion"),
-                                artists = game.Elements("link").Where(t => t.Attribute("type").Value == "boardgameartist")
+                                description = game.TryGetElement("description", new XElement("description", "no description")).Value,
+                                weight = game.TryGetElement("statistics", new XElement("statistics", "no statistics")).TryGetElement("ratings").TryGetElement("averageweight").TryGetAttribute("value", new XAttribute("value", "0")).Value,
+                                minAge = game.TryGetElement("minage", new XElement("name", "no minage")).TryGetAttribute("value", new XAttribute("value", "0")).Value,
+                                desingers = game.Elements("link").Where(t => t.TryGetAttribute("type").Value == "boardgamedesigner"),
+                                categories = game.Elements("link").Where(t => t.TryGetAttribute("type").Value == "boardgamecategory"),
+                                mechanics = game.Elements("link").Where(t => t.TryGetAttribute("type").Value == "boardgamemechanic"),
+                                expansions = game.Elements("link").Where(t => t.TryGetAttribute("type").Value == "boardgameexpansion"),
+                                artists = game.Elements("link").Where(t => t.TryGetAttribute("type").Value == "boardgameartist")
                             };
 
                 if (games.Count() > 1)
@@ -43,27 +53,27 @@ namespace TheGeek.Services.Mappers
 
                     foreach (var category in game.categories)
                     {
-                        existingGame.categories.Add(new Category { categoryId = Convert.ToInt32(category.Attribute("id").Value), name = category.Attribute("value").Value });
+                        existingGame.categories.Add(new Category { categoryId = Convert.ToInt32(category.TryGetAttribute("id", new XAttribute("value", "-1")).Value), name = category.TryGetAttribute("value", new XAttribute("value", "-1")).Value });
                     }
 
                     foreach (var mechanic in game.mechanics)
                     {
-                        existingGame.mechanics.Add(new Mechanic { mechanicId = Convert.ToInt32(mechanic.Attribute("id").Value), name = mechanic.Attribute("value").Value });
+                        existingGame.mechanics.Add(new Mechanic { mechanicId = Convert.ToInt32(mechanic.TryGetAttribute("id", new XAttribute("value", "-1")).Value), name = mechanic.TryGetAttribute("value", new XAttribute("value", "-1")).Value });
                     }
 
                     foreach (var expansion in game.expansions)
                     {
-                        existingGame.expansions.Add(new Expansion { expansionId = Convert.ToInt32(expansion.Attribute("id").Value), name = expansion.Attribute("value").Value });
+                        existingGame.expansions.Add(new Expansion { expansionId = Convert.ToInt32(expansion.TryGetAttribute("id", new XAttribute("value", "-1")).Value), name = expansion.TryGetAttribute("value", new XAttribute("value", "-1")).Value });
                     }
 
                     foreach (var desinger in game.desingers)
                     {
-                        existingGame.designers.Add(new Designer { designerId = Convert.ToInt32(desinger.Attribute("id").Value), name = desinger.Attribute("value").Value });
+                        existingGame.designers.Add(new Designer { designerId = Convert.ToInt32(desinger.TryGetAttribute("id", new XAttribute("value", "-1")).Value), name = desinger.TryGetAttribute("value", new XAttribute("value", "-1")).Value });
                     }
 
                     foreach (var artist in game.artists)
                     {
-                        existingGame.artists.Add(new Artist { artistId = Convert.ToInt32(artist.Attribute("id").Value), name = artist.Attribute("value").Value });
+                        existingGame.artists.Add(new Artist { artistId = Convert.ToInt32(artist.TryGetAttribute("id", new XAttribute("value", "-1")).Value), name = artist.TryGetAttribute("value", new XAttribute("value", "-1")).Value });
                     }
                 }
             }
